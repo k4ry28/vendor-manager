@@ -2,6 +2,7 @@
   "name": "back",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "nodemon ./bin/www",
     "seed": "node ./public/scripts/db-seed"

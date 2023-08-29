@@ -1,6 +1,6 @@
-const { Agreement } = require('../../models/aggreement');
-const { Submission } = require('../../models/submissions');
-const { Account } = require('../../models/accounts');
+import { Agreement } from '../../models/aggreement';
+import { Submission } from '../../models/submissions';
+import { Account } from '../../models/accounts';
 
 async function seed() {
   

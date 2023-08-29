@@ -1,6 +1,6 @@
 // Import required modules and setup the database and ORM
-const { db, Orm } = require('../lib/orm');
-const { Agreement } = require('./aggreement');
+import { db, Orm } from '../lib/orm';
+import { Agreement } from './aggreement';
 
 // Define the Account model with its attributes
 const Account = db.define('Account', {
@@ -31,6 +31,6 @@ Account.hasMany(Agreement, { as: 'Supplier', foreignKey: 'SupplierId' });
 Account.hasMany(Agreement, { as: 'Buyer', foreignKey: 'BuyerId' });
 
 // Export the Account model to be used in other parts of the application
-module.exports = {
+export default {
   Account,
 };

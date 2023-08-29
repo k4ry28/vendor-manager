@@ -1,5 +1,5 @@
 // Import required modules and setup the database and ORM
-const { db, Orm } = require('../lib/orm');
+import { db, Orm } from '../lib/orm';
 
 // Define the Submission model with its attributes
 const Submission = db.define('Submission', {
@@ -21,6 +21,6 @@ const Submission = db.define('Submission', {
 });
 
 // Export the Submission model to be used in other parts of the application
-module.exports = {
+export default {
   Submission,
 };
