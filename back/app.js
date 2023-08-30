@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import agreementsRouter from './routes/agreements.js';
+import submissionsRouter from './routes/submissions.js';
 import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/agreements', agreementsRouter);
+app.use('/submissions', submissionsRouter);
 app.use('/users', usersRouter);
 
 export default app;
