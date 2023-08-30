@@ -1,10 +1,14 @@
-import { Agreement } from '../../models/aggreement';
-import { Submission } from '../../models/submissions';
-import { Account } from '../../models/accounts';
+import { Agreement } from '../../models/agreement.js';
+import { Submission } from '../../models/submissions.js';
+import { Account } from '../../models/accounts.js';
+import { User } from '../../models/users.js';
+
+
 
 async function seed() {
   
   // create tables
+  await User.sync({ force: true });
   await Account.sync({ force: true });
   await Agreement.sync({ force: true });
   await Submission.sync({ force: true });

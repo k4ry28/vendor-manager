@@ -5,7 +5,9 @@ const db = new Sequelize({
   storage: './database.sqlite3',
 });
 
-export default {
+const Orm = Sequelize;
+
+export {
   db,
-  Orm: Sequelize,
+  Orm,
 };

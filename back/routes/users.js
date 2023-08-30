@@ -1,9 +1,27 @@
-import { Router } from 'express';
-var router = Router();
+import { Router } from "express";
+import { updatePass } from "../controllers/users.js";
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const router = Router();
+
+/*
+ * Get all users
+ *
+ * GET /users
+ * 
+ */
+router.get("/", function (req, res, next) {
+    
+});
+
+/*
+ * Get a user
+ *
+ * GET /users/:id
+ * 
+ * @param id: int
+ */
+router.get("/:id", function (req, res, next) {
+    
 });
 
 export default router;
