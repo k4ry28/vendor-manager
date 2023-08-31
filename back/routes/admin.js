@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getTopSupplierProfession, getTopBuyers } from "../controllers/submissions.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ const router = Router();
   @query {date} start
   @query {date} end 
 */
-router.get("/best-supplier-profession", async (req, res) => {
+router.get("/best-supplier-profession", auth, async (req, res) => {
     // validate query params
     if (!req.query.start || !req.query.end) {
         return res.status(400).json({ error: "Missing query start and end params" });
@@ -34,7 +35,7 @@ router.get("/best-supplier-profession", async (req, res) => {
   @query {date} end
   @query {int} limit (deffault 3)
 */
-router.get("/best-buyers", async (req, res) => {
+router.get("/best-buyers", auth, async (req, res) => {
     // validate query params
     if (!req.query.start || !req.query.end) {
         return res.status(400).json({ error: "Missing query start and end params" });

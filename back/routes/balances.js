@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { depositInAccount } from "../controllers/accounts.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ const router = Router();
   @param {int} account_id 
   @body {float} amount
 */
-router.post("/deposit/:accountId", async (req, res) => {
+router.post("/deposit/:accountId", auth, async (req, res) => {
     // validate body and params
     if (!req.params.accountId) {
         return res.status(400).json({ error: "Missing account_id" });

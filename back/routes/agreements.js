@@ -3,6 +3,7 @@ import {
     getAgreementsByAccount,
     getAgreementById,
 } from "../controllers/agreements.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -10,7 +11,7 @@ const router = Router();
   GET agreements by account.
   @query {int} acount_id
 */
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     // validate query params
     if (!req.query.account_id) {
         res.status(400).json({ error: "Missing account_id" });
@@ -33,7 +34,7 @@ router.get("/", async (req, res) => {
   @param {int} id
   @query {int} acount_id
 */
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
     // validate query and params
     if (!req.query.account_id) {
         res.status(400).json({ error: "Missing account_id" });

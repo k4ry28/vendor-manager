@@ -4,14 +4,12 @@ import { signIn, signUp } from "../controllers/auth.js";
 const router = Router();
 
 /*
- * Login
- *
- * POST /auth/signin
- * 
- * @body username: string
- * @body password: string
+  POST Login
+  
+  @body {string} username
+  @body {string} password
  */
-router.post("/signin", (req, res) => {
+router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -20,22 +18,20 @@ router.post("/signin", (req, res) => {
             .json({ error: "Username and password are required" });
     }
 
-    let user = signIn(username, password);
+    let token = await signIn(username, password);
 
-    if (user.error) {
-        return res.status(401).json({ error: "Unauthorized" });
+    if (token.error) {
+        return res.status(401).json({ error: token.error });
     }
 
-    res.status(200).json({ message: "User logged successfully" });
+    res.status(200).json({token: token});
 });
 
 /*
- * Register a new user
- *
- * POST /auth/signup
- * 
- * @body username: string
- * @body password: string
+  POST Register a new user
+  
+  @body {string} username
+  @body {string} password
  */
 router.post("/signup", (req, res) => {
     const { username, password } = req.body;

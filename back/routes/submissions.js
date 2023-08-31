@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getUnpaidSubmissions, paySubmissionById } from "../controllers/submissions.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -7,7 +8,7 @@ const router = Router();
    Get all unpaid submissions with active agreement by account.
    @query {int} account_id 
 */
-router.get("/unpaid", async (req, res) => {
+router.get("/unpaid", auth, async (req, res) => {
     // validate query params
     if (!req.query.account_id) {
         res.status(400).json({ error: "Missing account_id" });
@@ -30,7 +31,7 @@ router.get("/unpaid", async (req, res) => {
    Pay a submission by id.
    @param {int} submission_id
 */
-router.post("/:submission_id/pay", async (req, res) => {
+router.post("/:submission_id/pay", auth, async (req, res) => {
     // validate params
     if (!req.params.submission_id) {
         res.status(400).json({ error: "Missing submission_id" });

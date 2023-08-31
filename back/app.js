@@ -2,6 +2,7 @@ import express, { json, urlencoded } from 'express';
 import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import 'dotenv/config';
 
 import agreementsRouter from './routes/agreements.js';
 import submissionsRouter from './routes/submissions.js';

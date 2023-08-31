@@ -1,6 +1,6 @@
 import { User } from "../models/users.js";
 import bcrypt from "bcrypt";
-
+import jwt from 'jsonwebtoken';
 
 async function signUp(username, password) {
     try {
@@ -22,19 +22,25 @@ async function signUp(username, password) {
 
 async function signIn(username, password) {
     try {
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ 
+            where: { username: username },
+        });
 
-        if (!user) {
-            return { error: "User not found" };
+        const isPasswordValid = user === null? false : await bcrypt.compare(password, user.password);
+
+        if (!user || !isPasswordValid) {
+            return { error: "Invalid user or password" };
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        if (!isPasswordValid) {
-            return { error: "Invalid password" };
+        const userFortoken = {
+            id: user.id,
+            username: user.username,
+            role: user.role
         }
+        
+        const token = jwt.sign(userFortoken, process.env.JWT_SECRET, { expiresIn: "12h" });
 
-        return user;        
+        return token;        
     }
      catch (error) {
         console.error(error);

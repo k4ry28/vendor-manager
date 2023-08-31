@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { updatePass } from "../controllers/users.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ const router = Router();
  * GET /users
  * 
  */
-router.get("/", function (req, res, next) {
+router.get("/", auth, function (req, res, next) {
     
 });
 
@@ -20,7 +21,7 @@ router.get("/", function (req, res, next) {
  * 
  * @param id: int
  */
-router.get("/:id", function (req, res, next) {
+router.get("/:id", auth, function (req, res, next) {
     
 });
 
