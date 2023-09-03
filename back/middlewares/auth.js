@@ -13,7 +13,13 @@ export default async function auth(req, res, next) {
         return res.status(401).json({ message: 'Missing token' });
     }
 
-    let decoded = jwt.verify(token, process.env.JWT_SECRET);
+    let decoded;
+
+    try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+        console.log(error);
+    }
 
     if(!decoded || !decoded.id) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -22,15 +28,9 @@ export default async function auth(req, res, next) {
     //validate user role
     let url = decodeURIComponent(req.originalUrl);
 
-    let isAuthorized = true;
-
     if(url.includes('/admin') && decoded.role !== 'admin') {
-        isAuthorized = false;
-    }   
-
-    if(!isAuthorized) {
         return res.status(401).json({ message: 'Unauthorized' });
-    }
+    }   
    
 
     next();

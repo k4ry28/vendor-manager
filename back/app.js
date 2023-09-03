@@ -6,7 +6,7 @@ import 'dotenv/config';
 
 import agreementsRouter from './routes/agreements.js';
 import submissionsRouter from './routes/submissions.js';
-//import accountsRouter from './routes/accounts.js';
+import accountsRouter from './routes/accounts.js';
 import balanceRouter from './routes/balances.js';
 import adminRouter from './routes/admin.js';
 import usersRouter from './routes/users.js';
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/agreements', agreementsRouter);
 app.use('/submissions', submissionsRouter);
-//app.use('/accounts', accountsRouter);
+app.use('/accounts', accountsRouter);
 app.use('/balances', balanceRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);

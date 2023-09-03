@@ -4,6 +4,7 @@ import {
     getAgreementById,
 } from "../controllers/agreements.js";
 import auth from "../middlewares/auth.js";
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 
@@ -19,8 +20,10 @@ router.get("/", auth, async (req, res) => {
     }
 
     const { account_id } = req.query;
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
 
-    const agreements = await getAgreementsByAccount(account_id);
+    const agreements = await getAgreementsByAccount(account_id, user.id);
 
     if (agreements.error) {
         return res.status(400).json({ error: agreements.error });

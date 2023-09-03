@@ -1,5 +1,8 @@
 import { Account } from "../models/accounts.js";
+import { Submission } from "../models/submissions.js";
+import { Agreement } from "../models/agreement.js";
 import { getUnpaidSubmissions } from "./submissions.js";
+import { Op } from "sequelize";
 
 
 async function getAccountsByUser(user_id) {
@@ -7,7 +10,8 @@ async function getAccountsByUser(user_id) {
         const accounts = await Account.findAll({
             where: {
                 UserId: user_id
-            }
+            },
+            attributes: ["id", "firstName", "lastName", "balance", "type"]        
         });
 
         return accounts;
@@ -17,12 +21,43 @@ async function getAccountsByUser(user_id) {
     }
 }
 
-
-async function getAccountById(account_id) {
+async function verifyAccountUserById(account_id, user_id) {
     try {
-        const account = await Account.findByPk(account_id);
+        const account = await Account.findOne({
+            where: {                
+                [Op.and]: [
+                    { UserId: user_id },
+                    { id: account_id },
+                ],
+            },
+            attributes: ["id", "firstName", "lastName", "balance", "type"]
+        });
 
         return account;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+async function getAccountInfoById(account_id, user_id) {
+    try {
+        const account = await verifyAccountUserById(account_id, user_id);
+
+        if(!account) {
+            return { error: "Account not found" }
+        }
+
+        const unpaid_submissions = await getUnpaidSubmissions(account_id);
+
+        let unpaid = 0
+        unpaid_submissions.forEach(submission => {
+            let price = submission.dataValues.price;
+            console.log(price);
+            unpaid += price;
+        });
+
+        return { account, unpaid_submissions: unpaid };
     } catch (error) {
         console.error(error);
         return { error: "Failed to get account" }
@@ -56,4 +91,4 @@ async function depositInAccount(account_id, amount) {
     }
 }
 
-export { getAccountsByUser, getAccountById, depositInAccount };
+export { getAccountsByUser, getAccountInfoById, depositInAccount, verifyAccountUserById };

@@ -40,7 +40,7 @@ async function signIn(username, password) {
         
         const token = jwt.sign(userFortoken, process.env.JWT_SECRET, { expiresIn: "12h" });
 
-        return token;        
+        return {user: userFortoken, token};        
     }
      catch (error) {
         console.error(error);

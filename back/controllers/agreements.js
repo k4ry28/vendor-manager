@@ -1,10 +1,17 @@
 import { Agreement } from "../models/agreement.js";
+import { verifyAccountUserById } from "./accounts.js";
 import { Op } from "sequelize";
 
 // Define the controller for the Agreement model
 
-async function getAgreementsByAccount(account_id) {
+async function getAgreementsByAccount(account_id, user_id) {
     try {
+        const account = await verifyAccountUserById(account_id, user_id);
+
+        if(!account) {
+            return { error: "Account not found" }
+        }
+        
         const agreements = await Agreement.findAll({
             where: {
                 [Op.and]: [

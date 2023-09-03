@@ -40,6 +40,9 @@ async function getUnpaidSubmissions(account_id) {
     }
 }
 
+/*
+ * Pay a submission by id
+ */
 async function paySubmissionById(id) {
     const submission = await Submission.findOne({
         where: { id: id },

@@ -18,13 +18,13 @@ router.post("/login", async (req, res) => {
             .json({ error: "Username and password are required" });
     }
 
-    let token = await signIn(username, password);
+    let tokenData = await signIn(username, password);
 
-    if (token.error) {
-        return res.status(401).json({ error: token.error });
+    if (tokenData.error) {
+        return res.status(401).json({ error: tokenData.error });
     }
-
-    res.status(200).json({token: token});
+    res.cookie('auth_service', tokenData.token)
+    res.status(200).json(tokenData.user);
 });
 
 /*
