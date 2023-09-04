@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getUnpaidSubmissions, paySubmissionById } from "../controllers/submissions.js";
 import auth from "../middlewares/auth.js";
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 
@@ -16,8 +17,10 @@ router.get("/unpaid", auth, async (req, res) => {
     }
 
     const { account_id } = req.query;
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
 
-    const submissions = await getUnpaidSubmissions(account_id);
+    const submissions = await getUnpaidSubmissions(account_id, user.id);
     
     if (submissions.error) {
         return res.status(400).json({ error: submissions.error });
@@ -39,8 +42,10 @@ router.post("/:submission_id/pay", auth, async (req, res) => {
     }
 
     const { submission_id } = req.params;
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
 
-    const submission = await paySubmissionById(submission_id);
+    const submission = await paySubmissionById(submission_id, user.id);
 
     if (submission.error) {
         return res.status(400).json({ error: submission.error });

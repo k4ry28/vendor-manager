@@ -1,23 +1,30 @@
 import { Submission } from "../models/submissions.js";
 import { Agreement } from "../models/agreement.js";
 import { Account } from "../models/accounts.js";
+import { verifyAccountUserById } from "./accounts.js";
 import { Op, fn, col, literal } from "sequelize";
 import { db } from "../lib/orm.js";
 
 /*
  * Get all unpaid submissions for an account with active agreement (in_progress).
  */
-async function getUnpaidSubmissions(account_id) {
+async function getUnpaidSubmissions(account_id, user_id) {
     try {
+        const account = await verifyAccountUserById(account_id, user_id);
+
+        if(!account) {
+            return { error: "Account not found" }
+        }
+        
         const submissions = await Submission.findAll({
             where: {
                 paid: false,
             },
-            attributes: ["id", "description", "price", "paid"],
+            attributes: ["id", "description", "createdAt", "price", "paid"],
             include: [
                 {
                     model: Agreement,
-                    attributes: ["id", "terms", "status", "createdAt"],
+                    attributes: ["id", "terms", "status"],
                     where: {
                         [Op.and]: [
                             {
@@ -29,7 +36,19 @@ async function getUnpaidSubmissions(account_id) {
                             { status: "in_progress" },
                         ],
                     },
-                },
+                    include: [
+                        {
+                            model: Account,
+                            as: "Buyer",
+                            attributes: ["id", "firstName", "lastName"],
+                        },
+                        {
+                            model: Account,
+                            as: "Supplier",
+                            attributes: ["id", "firstName", "lastName"],
+                        }
+                    ]
+                },                
             ],
         });
 
@@ -43,7 +62,7 @@ async function getUnpaidSubmissions(account_id) {
 /*
  * Pay a submission by id
  */
-async function paySubmissionById(id) {
+async function paySubmissionById(id, user_id) {
     const submission = await Submission.findOne({
         where: { id: id },
         attributes: ["id", "description", "price", "paid"],
@@ -66,6 +85,14 @@ async function paySubmissionById(id) {
             },
         ],
     });
+
+    if (!submission) {
+        return { error: "Submission not found" };
+    }
+
+    if (submission.Agreement.Buyer.id !== user_id) {
+        return { error: "Unauthorized" };
+    }
 
     if (submission.Agreement.Buyer.balance < submission.price) {
         return { error: "Insufficient balance" };

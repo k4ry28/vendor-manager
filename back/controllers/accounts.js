@@ -47,13 +47,16 @@ async function getAccountInfoById(account_id, user_id) {
         if(!account) {
             return { error: "Account not found" }
         }
+        
+        const unpaid_submissions = await getUnpaidSubmissions(account_id, user_id);
 
-        const unpaid_submissions = await getUnpaidSubmissions(account_id);
+        if(unpaid_submissions.error) {
+            return { error: "Account not found" }
+        }
 
         let unpaid = 0
         unpaid_submissions.forEach(submission => {
             let price = submission.dataValues.price;
-            console.log(price);
             unpaid += price;
         });
 
@@ -65,9 +68,14 @@ async function getAccountInfoById(account_id, user_id) {
 }
 
 
-async function depositInAccount(account_id, amount) {
-    try {
-        const unpaidSubmissions = await getUnpaidSubmissions(account_id);
+async function depositInAccount(account_id, amount, user_id) {
+    try {        
+        const unpaidSubmissions = await getUnpaidSubmissions(account_id, user_id);
+
+        if(unpaidSubmissions.error) {
+            return { error: "Account not found" }
+        }
+
         let amountToPay = 0;
 
         unpaidSubmissions.forEach(submission => {

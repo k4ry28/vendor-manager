@@ -1,3 +1,4 @@
+import { Account } from "../models/accounts.js";
 import { Agreement } from "../models/agreement.js";
 import { verifyAccountUserById } from "./accounts.js";
 import { Op } from "sequelize";
@@ -24,6 +25,19 @@ async function getAgreementsByAccount(account_id, user_id) {
                     { status: { [Op.in]: ["new", "in_progress"] } },
                 ],
             },
+            attributes: ["id", "terms", "status", "createdAt"],
+            include: [
+                {
+                    model: Account,
+                    attributes: ["id", "firstName", "lastName", "type"],
+                    as: "Buyer",
+                },
+                {
+                    model: Account,
+                    attributes: ["id", "firstName", "lastName", "type"],
+                    as: "Supplier",
+                }
+            ]
         });
 
         return agreements;

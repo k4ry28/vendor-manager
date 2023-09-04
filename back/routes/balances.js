@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { depositInAccount } from "../controllers/accounts.js";
 import auth from "../middlewares/auth.js";
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 
@@ -21,8 +22,10 @@ router.post("/deposit/:accountId", auth, async (req, res) => {
 
     const { amount } = req.body;
     const { accountId } = req.params;
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
 
-    const deposit = await depositInAccount(accountId, amount);
+    const deposit = await depositInAccount(accountId, Number(amount), user.id);
 
     if (deposit.error) {
         return res.status(400).json({ error: deposit.error });
