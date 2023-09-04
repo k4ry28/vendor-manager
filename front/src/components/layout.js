@@ -31,9 +31,13 @@ export default function Layout ({ children }) {
                
             </header>
             <main className={redHat.className}>    
-                <Box bg={primaryColor} h={'100vh'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} >                  
-                    {children}                   
-                </Box>                         
+                { titlePathname == 'LOGIN'?
+                    children
+                    :
+                    <Box bg={primaryColor} h={'100vh'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} >                  
+                        {children}                   
+                    </Box>
+                }                         
             </main>
         </>
     )

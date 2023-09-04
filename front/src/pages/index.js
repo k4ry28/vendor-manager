@@ -11,6 +11,7 @@ import Link from "next/link";
 export default function Home() {
   const [userInfo, setUserInfo] = useState(null);
   const [accounts, setAccounts] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -19,9 +20,11 @@ export default function Home() {
     axios.get(`/api/account/getAccounts?user_id=${user.id}`)
       .then(function (response) {
         setAccounts(response.data);
+        setError(null);
       })
       .catch(function (error) {
-        console.log(error);
+        setError(error.response?.data);
+        setAccounts([]);
       });
   }, []);
 
@@ -44,8 +47,15 @@ export default function Home() {
               <Icon as={TbCirclePlus} boxSize={12} bg={'white'} rounded={100} mb={1} />
               <Text fontSize={'xl'} color={'white'} > NEW </Text>
             </Box>
-          }
+          }          
         </Box>
+        { userInfo && userInfo.role === 'admin' &&
+          <Box>
+            <Link href={'/admin'}>
+              <Text fontSize={'lg'} color={'white'} textAlign={'center'} > Admin Page </Text>
+            </Link>
+          </Box>
+        }
       </Box>
     
   )
