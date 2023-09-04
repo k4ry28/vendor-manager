@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getTopSupplierProfession, getTopBuyers } from "../controllers/submissions.js";
 import auth from "../middlewares/auth.js";
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 
@@ -18,6 +19,12 @@ router.get("/best-supplier-profession", auth, async (req, res) => {
 
     const startDate = new Date(req.query.start);
     const endDate = new Date(req.query.end);
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
+
+    if(user.role !== "admin") {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
 
     const topSupplierProfession = await getTopSupplierProfession(startDate, endDate);
 
@@ -44,6 +51,12 @@ router.get("/best-buyers", auth, async (req, res) => {
     const limit = req.query.limit;
     const startDate = new Date(req.query.start);
     const endDate = new Date(req.query.end);
+    let token = req.headers.authorization?.split(' ')[1];
+    let user = jwt.verify(token, process.env.JWT_SECRET);
+
+    if(user.role !== "admin") {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
 
     const topBuyers = await getTopBuyers(startDate, endDate, limit);
 

@@ -15,6 +15,60 @@ async function seed() {
   
   // insert data
   await Promise.all([
+    User.create({
+      id: 1,
+      username: 'aliceInW',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 2,
+      username: 'bobSmith',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 3,
+      username: 'evergreen',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 4,
+      username: 'markWill',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 5,
+      username: 'johnDoe',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 6,
+      username: 'janeDev',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 7,
+      username: 'bigMike',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 8,
+      username: 'lucyB20',
+      password: '$2b$10$k0dd7BbmFstOxcWk8WuoNOUoWjlL.bgxE9ghFfM8iEiOZVVUQ7kwa',
+      role: 'user',
+    }),
+    User.create({
+      id: 9,
+      username: 'admin',
+      password: '$2b$10$Cvz9kdwbPtkbaqtrYTkp8OfKVlxPuxwnm8tnO9i3DhXkJgDC8KUZ2',
+      role: 'admin',
+    }),
     Account.create({
       id: 1,
       firstName: 'Alice',
@@ -22,6 +76,7 @@ async function seed() {
       profession: 'Engineer',
       balance: 987.21,
       type: 'buyer',
+      UserId: 1,
     }),
     Account.create({
       id: 2,
@@ -30,6 +85,7 @@ async function seed() {
       profession: 'Designer',
       balance: 321.55,
       type: 'buyer',
+      UserId: 2,
     }),
     Account.create({
       id: 3,
@@ -38,6 +94,7 @@ async function seed() {
       profession: 'Artist',
       balance: 456.78,
       type: 'buyer',
+      UserId: 3,
     }),
     Account.create({
       id: 4,
@@ -46,6 +103,7 @@ async function seed() {
       profession: 'Writer',
       balance: 81.13,
       type: 'buyer',
+      UserId: 4,
     }),
     Account.create({
       id: 5,
@@ -54,6 +112,7 @@ async function seed() {
       profession: 'Musician',
       balance: 624.45,
       type: 'supplier',
+      UserId: 5,
     }),
     Account.create({
       id: 6,
@@ -62,6 +121,7 @@ async function seed() {
       profession: 'Developer',
       balance: 1100.21,
       type: 'supplier',
+      UserId: 6,
     }),
     Account.create({
       id: 7,
@@ -70,6 +130,7 @@ async function seed() {
       profession: 'Designer',
       balance: 500.33,
       type: 'supplier',
+      UserId: 7,
     }),
     Account.create({
       id: 8,
@@ -78,6 +139,7 @@ async function seed() {
       profession: 'Photographer',
       balance: 909.09,
       type: 'supplier',
+      UserId: 8,
     }),
     Agreement.create({
       id: 1,
