@@ -12,8 +12,8 @@ const UserSessionMenu = () => {
         router.push('/login');
     }
 
-    let primaryColor = '#35155D';
-    let primaryLight = '#512B81';
+    let primaryColor = '#512B81';
+    let primaryDarker = '#1D0C33';
 
     return (
         <Menu>
@@ -27,8 +27,8 @@ const UserSessionMenu = () => {
             >
                 
             </MenuButton>
-            <MenuList bg={primaryColor}>               
-                <MenuItem bg={primaryColor} textAlign={'center'} _hover={{bg: primaryLight}} color={'white'} onClick={() => signOut()} >Cerrar sesión</MenuItem>
+            <MenuList bg={primaryDarker}>               
+                <MenuItem bg={primaryDarker} textAlign={'center'} _hover={{bg: primaryColor}} color={'white'} onClick={() => signOut()} >Cerrar sesión</MenuItem>
             </MenuList>
         </Menu>
     )

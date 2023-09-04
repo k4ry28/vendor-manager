@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { Red_Hat_Display  } from '@next/font/google';
-import SideNavbar from '@/components/sideNavbar.js';
 import { Box } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 
@@ -32,17 +31,9 @@ export default function Layout ({ children }) {
                
             </header>
             <main className={redHat.className}>    
-                {
-                    titlePathname === 'LOGIN' ?
-                        children
-                    :
-                    <Box bg={primaryColor} h={'100vh'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} > 
-                        { titlePathname !== '' &&
-                            <SideNavbar />
-                        }                
-                        {children}                   
-                    </Box>
-                }                          
+                <Box bg={primaryColor} h={'100vh'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} >                  
+                    {children}                   
+                </Box>                         
             </main>
         </>
     )
