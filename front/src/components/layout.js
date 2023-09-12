@@ -31,7 +31,7 @@ export default function Layout ({ children }) {
                 { titlePathname == 'LOGIN' || titlePathname == 'SIGNUP'?
                     children
                     :
-                    <Box bg={bgColor} display={'flex'} my={{base: 5, lg: 10}} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignItems={'center'} justifyContent={'center'} >                  
+                    <Box bg={bgColor} display={'flex'}  flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignItems={'center'} justifyContent={'center'} >                  
                         {children}                   
                     </Box>
                 }                         

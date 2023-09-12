@@ -34,7 +34,7 @@ export default function Home() {
 
   return (
     
-      <Box h={{base: '', lg: '90vh'}} w={'80%'} display={'flex'} flexDirection={'column'} alignItems={'center'} mx={'auto'} gap={10} >
+      <Box h={{base: '100vh', lg: '90vh'}} w={'80%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} mx={'auto'} gap={10} >
         <Flex w={'100%'} alignItems={'center'} justifyContent={'end'} display={{ base: 'none', lg: 'flex'}}>
           <UserSessionMenu />
         </Flex>

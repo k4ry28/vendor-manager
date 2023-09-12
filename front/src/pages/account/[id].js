@@ -40,7 +40,7 @@ const AccountView = ({id, type}) => {
     }, [reload])
     
     return (
-        <Box bg={bgColor}  w={'100%'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={'wrap'} > 
+        <Box bg={bgColor} my={{base: 5, lg: 10}} w={'100%'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={'wrap'} > 
             <SideNavbar accountId={id} type={type} />
             
             <Box w={{base: '100%', lg: '75%', xl: '80%'}} display={'flex'} flexDirection={'column'} mx={'auto'} gap={10} >
