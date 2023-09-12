@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useToast, Box } from '@chakra-ui/react';
+import { useToast, Box, Icon } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Cookies from 'js-cookie';
 import dayjs from 'dayjs';
 import SignForm from '@/components/signForm.js';
+import { MdError, MdCheckCircle } from 'react-icons/md';
 
 export default function SignInPage ({gradientOfTheDay}) {
     const toast = useToast();
@@ -13,37 +13,42 @@ export default function SignInPage ({gradientOfTheDay}) {
 
 
     const onSubmit = (data) => {
-        Cookies.remove('auth_service');
         setSubmitIsLoading(true);
         
-        axios.post('/api/login', data)
+        axios.post('/api/signup', data)
             .then(res => {
-                const { user } = res.data;
-                const { auth_service } = res.data.sessionCookie;
-
-                localStorage.setItem('user', JSON.stringify(user));
-
-                Cookies.set('auth_service', auth_service, {
-                    expires: 0.5
+                toast({
+                    position: 'top',
+                    isClosable: true,
+                    render: () => (
+                        <Box display={'flex'} alignItems={'center'} bg={'#282828'} color={'white'} p={4} rounded={'xl'}>
+                            <Icon as={MdCheckCircle} color={'green.500'} mr={3} boxSize={6} />
+                            {'Account created successfully.'}
+                        </Box>
+                    )
                 });
 
-                router.push('/');
+                // redirect to login after 2 seconds
+                setTimeout(() => {
+                    router.push('/login')
+                }, 2000);
+                
             })
             .catch(err => {
-
-                console.error(err);
 
                 toast({
                     position: 'top',
                     isClosable: true,
                     render: () => (
-                        <Box bg={'#282828'} color={'white'} p={4} rounded={'xl'}>
-                            Las credenciales no pertenecen a ningún usuario
+                        <Box display={'flex'} alignItems={'center'} bg={'#282828'} color={'white'} p={4} rounded={'xl'}>
+                            <Icon as={MdError} color={'red.500'} mr={3} boxSize={6} />
+                            {err.response?.data?.error ? err.response?.data?.error : 'There was an unexpected error.'}
                         </Box>
                     )
-                })
-            })
-            .finally(e => setSubmitIsLoading(false));
+                });
+
+                setSubmitIsLoading(false)
+            });
     }
 
     return (
@@ -52,7 +57,7 @@ export default function SignInPage ({gradientOfTheDay}) {
                 submitIsLoading={submitIsLoading}
                 gradientOfTheDay={gradientOfTheDay}            
                 onSubmit={onSubmit}
-                signup={false}
+                signup={true}
             />
         </>
     )

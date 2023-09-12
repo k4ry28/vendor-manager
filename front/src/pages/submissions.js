@@ -57,15 +57,19 @@ const SubmissionsView = ({acc, type}) => {
                     </Box>
                 </Flex>
                 { submissions &&
-                    <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignContent={'center'} gap={10} w={'80%'} h={'100%'} bg={primaryDarker} rounded={25}>
-                        <Text fontSize={{base: 'lg', lg: '3xl'}} mt={5} color={'white'} alignSelf={'center'}> Unpaid Submissions </Text>
-                        { submissions.map(submission => (
-                            <SubmissionCard key={submission.id} submission={submission} user={userInfo} setReload={setReload} />
-                        ))}
+                    <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignContent={'center'} gap={10} w={{base: '95%', lg: '80%'}} h={'100%'} bg={primaryDarker} rounded={25} border={'2px solid #512B81'}>
+                        <Text fontSize={{base: 'xl', lg: '3xl'}} fontWeight={'semibold'} mt={5} color={'white'} alignSelf={'center'}> Unpaid Submissions </Text>
+                        { submissions.length > 0 ?
+                            submissions.map(submission => (
+                                <SubmissionCard key={submission.id} submission={submission} user={userInfo} setReload={setReload} />
+                            ))
+                            :
+                            <Text mt={5} color={'white'} alignSelf={'center'}> No unpaid submissions... </Text>
+                        }
                     </Box>
                 }
                 { error &&
-                    <Box textAlign={'center'} bg={primaryDarker} color={'white'} p={4} rounded={25} fontSize={'2xl'}>
+                    <Box textAlign={'center'} bg={primaryDarker} color={'white'} p={4} rounded={25} fontSize={'2xl'} border={'2px solid #512B81'}>
                         <Text color={'white'} mb={5}> {error} </Text>
                         <Image src={'/images/404.jpg'} alt="error" width={400} height={400}/>
                     </Box>
@@ -88,8 +92,8 @@ const SubmissionCard = ({submission, user, setReload}) => {
     }
 
     return (
-        <Box display={'flex'} flexDirection={'row'} w={'60%'} justifyContent={'center'} bg={primaryColor} color={'white'} rounded={25} p={4} >
-            <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} justifyContent={'center'} alignContent={'center'} gap={2}  w={'100%'} fontSize={18}>
+        <Box display={'flex'} flexDirection={'row'} w={{base: '90%', lg: '60%'}} justifyContent={'center'} bg={primaryColor} color={'white'} rounded={25} p={4} >
+            <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} justifyContent={'center'} alignContent={'center'} gap={2}  w={'100%'} fontSize={{base: 16, lg: 18}}>
                 <Box display={'flex'} flexDirection={'row'} gap={10}>
                     <Text><Icon as={HiOutlineUser} mr={2}/><strong>Buyer:</strong> {`${submission.Agreement.Buyer.firstName} ${submission.Agreement.Buyer.lastName}`} </Text>
                     <Text><Icon as={HiOutlineUser} mr={2}/><strong>Supplier:</strong> {`${submission.Agreement.Supplier.firstName} ${submission.Agreement.Supplier.lastName}`} </Text>

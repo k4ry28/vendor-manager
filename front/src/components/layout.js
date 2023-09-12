@@ -1,10 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import { Red_Hat_Display  } from '@next/font/google';
 import { Box } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 
 
 const redHat = Red_Hat_Display({ subsets: ['latin'] });
@@ -12,7 +9,7 @@ const redHat = Red_Hat_Display({ subsets: ['latin'] });
 export default function Layout ({ children }) {
     const router = useRouter();
 
-    let primaryColor = '#000119';
+    let bgColor = '#000119';
 
     const pathnameSplit = router.pathname.split('/');
     const titlePathname = pathnameSplit[pathnameSplit.length - 1].toUpperCase();
@@ -31,10 +28,10 @@ export default function Layout ({ children }) {
                
             </header>
             <main className={redHat.className}>    
-                { titlePathname == 'LOGIN'?
+                { titlePathname == 'LOGIN' || titlePathname == 'SIGNUP'?
                     children
                     :
-                    <Box bg={primaryColor} h={'100vh'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} >                  
+                    <Box bg={bgColor} display={'flex'} my={{base: 5, lg: 10}} flexDirection={{base: 'column', lg: 'row'}} flexWrap={{base: 'wrap', lg: 'wrap'}} alignItems={'center'} justifyContent={'center'} >                  
                         {children}                   
                     </Box>
                 }                         

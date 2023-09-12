@@ -40,13 +40,13 @@ const AccountView = ({id, type}) => {
     }, [reload])
     
     return (
-        <Box bg={bgColor} h={'100vh'} w={'100%'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={'wrap'} alignContent={'center'} justifyContent={{base: 'center', lg: 'center'}} > 
+        <Box bg={bgColor}  w={'100%'} display={'flex'} flexDirection={{base: 'column', lg: 'row'}} flexWrap={'wrap'} > 
             <SideNavbar accountId={id} type={type} />
             
-            <Box h={'90vh'} w={{base: '100%', lg: '75%', xl: '80%'}} display={'flex'} flexDirection={'column'} alignItems={'center'} mx={'auto'} gap={10} >
+            <Box w={{base: '100%', lg: '75%', xl: '80%'}} display={'flex'} flexDirection={'column'} mx={'auto'} gap={10} >
                 <Flex w={'100%'} alignItems={'center'} justifyContent={{base: 'center', lg: 'space-between'}}>
                     { accountInfo ?
-                        <BalanceAndPaidCards balance={accountInfo.account?.balance} unpaid_submissions={accountInfo.unpaid_submissions} />
+                        <BalanceAndPaidCards balance={accountInfo.account?.balance? accountInfo.account?.balance : 0} unpaid_submissions={accountInfo.unpaid_submissions} />
                         :
                         <Box></Box>
                     }
@@ -55,22 +55,22 @@ const AccountView = ({id, type}) => {
                     </Box>
                 </Flex>
                 { accountInfo &&
-                    <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignContent={'center'} gap={10} w={'100%'} >
+                    <Box display={'flex'} flexDirection={'column'} flexWrap={'wrap'} w={'100%'} >
                         <TitleGradientStroke title={`Hi ${accountInfo.account?.firstName}!`}/>
-                        <Text fontSize={{base: 'lg', lg: '2xl'}} color={'white'} alignSelf={'center'}> Here are some shortcuts for you... </Text>
+                        <Text fontSize={{base: 'lg', lg: '2xl'}} mb={5} color={'white'} alignSelf={'center'}> Here are some shortcuts for you... </Text>
                         
                         { type === 'buyer' &&
                             <>
-                                <Box as={'button'} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
+                                <Box as={'button'} mb={7} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
                                     <Icon as={MdOutlineAttachMoney} boxSize={12} bg={'white'} color={'#0099ff'} p={2} rounded={100} mx={'auto'} mb={2} />
                                     <Text fontWeight={'semibold'} textAlign={'center'}> Pay Submission </Text>
                                 </Box>
-                                <Box as={'button'} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} 
+                                <Box as={'button'} mb={7} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} 
                                     bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}} onClick={onDepositOpen}>
                                     <Icon as={MdOutlineVerticalAlignBottom} boxSize={12} bg={'white'} color={'#0099ff'} p={2} rounded={100} mx={'auto'} mb={2} />
                                     <Text fontWeight={'semibold'} textAlign={'center'}> Deposit </Text>
                                 </Box>
-                                <Box as={'button'} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
+                                <Box as={'button'} mb={7} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
                                     <Icon as={MdOutlinePostAdd} boxSize={12} bg={'white'} color={'#0099ff'} p={2} rounded={100} mx={'auto'} mb={2} />
                                     <Text fontWeight={'semibold'} textAlign={'center'}> Create Agreement </Text>
                                 </Box>
@@ -81,7 +81,7 @@ const AccountView = ({id, type}) => {
 
                         { type === 'supplier' &&
                             <>
-                                <Box as={'button'} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
+                                <Box as={'button'} mb={7} display={'flex'} flexDirection={'column'} flexWrap={'wrap'} alignSelf={'center'} justifyContent={'center'} alignContent={'center'} bg={'#512B81'} color={'white'} rounded={25} p={4} w={{base: '40%', lg: '30%'}}>
                                     <Icon as={MdAddTask} boxSize={12} bg={'white'} color={'#0099ff'} p={2} rounded={100} mx={'auto'} mb={2} />
                                     <Text fontWeight={'semibold'} textAlign={'center'}> Create Submission </Text>
                                 </Box>
@@ -90,7 +90,7 @@ const AccountView = ({id, type}) => {
                     </Box>
                 }
                 { error &&
-                    <Box textAlign={'center'} bg={'#512B81'} color={'white'} p={4} rounded={25} fontSize={'2xl'}>
+                    <Box textAlign={'center'} bg={'#512B81'} mb={5} color={'white'} p={4} rounded={25} fontSize={'2xl'}>
                         <Text color={'white'} mb={5}> {error} </Text>
                         <Image src={'/images/404.jpg'} alt="error" width={400} height={400}/>
                     </Box>

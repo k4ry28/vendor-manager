@@ -30,7 +30,7 @@ export default function SideNavbar({accountId, type}) {
 
     return (
         <>
-            <Box bg={'#1D0C33'} display={{base: 'none', lg: 'flex'}} direction={'column'} justifyContent={'center'} ml={7} p={4} w={'200px'} h={'90vh'} rounded={25}>
+            <Box bg={'#1D0C33'} display={{base: 'none', lg: 'flex'}} direction={'column'} justifyContent={'center'} ml={7} p={4} w={'200px'} h={'90vh'} rounded={25} border={'2px solid #512B81'}>
                 <Flex direction={'column'} wrap={'wrap'} justifyContent={'space-between'} h={'100%'} fontSize={'1.2em'} color={'white'} >
                 <VStack gap={5} my={10} alignItems={'flex-start'}>
                     {links.map((link) => (
@@ -40,7 +40,7 @@ export default function SideNavbar({accountId, type}) {
                     )}
                 </VStack>
 
-                <Link as={NextLink} href='/' mb={10} display={'flex'} alignItems={'center'} _hover={{bg: primaryColor}} w={'100%'} p={3} rounded={20}>
+                <Link as={NextLink} href='#' mb={10} display={'flex'} alignItems={'center'} _hover={{bg: primaryColor}} w={'100%'} p={3} rounded={20}>
                     <Icon as={HiCog} style={{ display: 'inline' }} mr={2} />
                     Settings
                 </Link>
@@ -48,7 +48,7 @@ export default function SideNavbar({accountId, type}) {
             </Box>
             
             <Box display={{base: 'flex', lg: 'none'}}  justifyContent={'space-between'} mb={2}>
-                <IconButton ref={btnRef} aria-label='Menu' icon={<HiMenu />} colorScheme='purple' w={'50px'} ml={2} onClick={onOpen} />
+                <IconButton ref={btnRef} aria-label='Menu' icon={<HiMenu />} colorScheme={'purple'} w={'50px'} ml={2} onClick={onOpen} />
                 <UserSessionMenu />
             </Box>
                
@@ -59,7 +59,7 @@ export default function SideNavbar({accountId, type}) {
                 finalFocusRef={btnRef}                           
             >
                 <DrawerOverlay />
-                <DrawerContent>
+                <DrawerContent border={'2px solid #512B81'}>
                     <DrawerCloseButton color={'white'}/>
 
                     <DrawerBody bg={primaryDarker} fontSize={'1.2em'} color={'white'} >
