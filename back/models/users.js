@@ -4,6 +4,7 @@ const User = db.define('User', {
     username: {
         type: Orm.STRING,
         allowNull: false,
+        unique: true
     },
     password: {
         type: Orm.STRING,

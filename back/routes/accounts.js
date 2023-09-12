@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { getAccountsByUser, getAccountInfoById } from "../controllers/accounts.js";
+import { getAccountsByUser, getAccountInfoById, createAccount } from "../controllers/accounts.js";
 import auth from "../middlewares/auth.js";
 import jwt from 'jsonwebtoken';
 
 const router = Router();
 
 /*
-  GET account by user_id.
+  GET accounts by user_id.
   @param {int} user_id
 */
 router.get("/user/:user_id", auth, async (req, res) => {
@@ -25,6 +25,40 @@ router.get("/user/:user_id", auth, async (req, res) => {
     }
 
     return res.status(200).json(accounts);
+});
+
+/* 
+  Create new account.
+  @param {int} user_id
+  @body {string} type
+  @body {string} firstName
+  @body {string} lastName
+  @body {string} profession
+*/
+router.post("/user/:user_id", auth, async (req, res) => {
+    // validate params
+    if (!req.params.user_id) {
+        res.status(400).json({ error: "user_id is required" });
+        return;
+    }
+
+    //validate body
+    if (!req.body.type || !req.body.firstName || !req.body.lastName || !req.body.profession) {
+        res.status(400).json({ error: "Missing type, firstName, lastName or profession" });
+        return;
+    }
+
+    const { user_id } = req.params;
+    const { type, firstName, lastName, profession } = req.body;
+
+    const account = await createAccount(type, firstName, lastName, profession, user_id);
+
+    if(account.error) {
+        return res.status(400).json({error: account.error});
+    }
+
+    return res.status(200).json(account);
+
 });
 
 /*
@@ -50,6 +84,6 @@ router.get("/id/:account_id", auth, async (req, res) => {
     }
 
     return res.status(200).json(account);
-})
+});
 
 export default router;

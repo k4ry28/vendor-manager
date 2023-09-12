@@ -15,6 +15,11 @@ async function signUp(username, password) {
         return newUser;
     } catch (error) {
         console.error(error);
+        
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            return { error: "Username already exists" };
+        }
+
         return { error: "Failed to create user" };
     }
 } 

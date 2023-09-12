@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
   @body {string} username
   @body {string} password
  */
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -42,7 +42,7 @@ router.post("/signup", (req, res) => {
             .json({ error: "Username and password are required" });
     }
 
-    let user = signUp(username, password);
+    let user = await signUp(username, password);
 
     if (user.error) {
         return res.status(400).json({ error: user.error });

@@ -1,6 +1,7 @@
 import { Account } from "../models/accounts.js";
 import { Submission } from "../models/submissions.js";
 import { Agreement } from "../models/agreement.js";
+import { User } from "../models/users.js";
 import { getUnpaidSubmissions } from "./submissions.js";
 import { Op } from "sequelize";
 
@@ -99,4 +100,29 @@ async function depositInAccount(account_id, amount, user_id) {
     }
 }
 
-export { getAccountsByUser, getAccountInfoById, depositInAccount, verifyAccountUserById };
+
+async function createAccount(type, firstName, lastName, profession, user_id) {
+    try {
+        const account = await Account.create({
+            type,
+            firstName,
+            lastName,
+            profession,
+            UserId: user_id
+        },
+        {
+            include: [{
+                model: User,
+                as: "User",
+                attributes: ["id"]
+            }]
+        });
+        
+        return account;
+    } catch (error) {
+        console.error(error);
+        return { error: "Failed to create account" }
+    }
+}
+
+export { getAccountsByUser, getAccountInfoById, depositInAccount, verifyAccountUserById, createAccount };
